@@ -1,0 +1,9 @@
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\config\CorsConfig.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\controller\ProductController.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\dto\ProductDTO.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\entity\Product.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\ProductsApplication.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\repository\ProductRepository.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\security\SecurityConfig.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\service\ProductService.java
+C:\Projects\Product Registration System\backend\products\src\main\java\com\brcostalop\products\utils\ApiResponse.java
