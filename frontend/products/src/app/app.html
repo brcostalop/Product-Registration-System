@@ -1,4 +1,6 @@
-<div>
+  <div>
   <button (click)="funcaoAPI()">Chamar</button>
-  <p>{{texto.name}}</p>
+    @for (produto of produtos; track produto.name) {
+      <p>{{produto.name}}</p>
+    }
 </div>

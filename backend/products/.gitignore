@@ -1,0 +1,46 @@
+# ----------------------
+# BACKEND (Spring Boot)
+# ----------------------
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+**/*.log
+**/*.tmp
+*.iml
+*.ipr
+*.iws
+.DS_Store
+*.class
+*.jar
+*.war
+*.ear
+
+# IDEs
+.idea/
+*.swp
+*.swo
+.vscode/
+*.log
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Configuration
+application-dev.properties
+application-test.properties
+application-prod.properties
+application-local.properties
+.env
+
+# Database
+*.h2.db
+*.mv.db
+*.trace.db
+
+# ----------------------
+# Git
+# ----------------------
+.git/
+.gitignore
