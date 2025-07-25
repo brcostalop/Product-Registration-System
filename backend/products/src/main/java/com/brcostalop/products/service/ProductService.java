@@ -1,25 +1,22 @@
 package com.brcostalop.products.service;
 
-import com.brcostalop.products.entity.Product;
-import com.brcostalop.products.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.brcostalop.products.dto.ProductDTO;
 
 import java.util.List;
+import java.util.Map;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    ProductDTO save(ProductDTO productDto);
 
-    public List<Product> listarProdutos() {
-        return productRepository.findAll();
-    }
+    ProductDTO update(String id, ProductDTO productDTO);
 
-//    @Transactional
-    public void criarProduto(Product product) {
-        productRepository.save(product);
-    }
+    void delete(String id);
+
+    ProductDTO searchById(String id);
+
+    List<ProductDTO> allList();
+
+    List<ProductDTO> searchByFilter(Map<String, String> filter);
 
 }

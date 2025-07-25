@@ -1,10 +1,8 @@
 package com.brcostalop.products.dto;
 
-import lombok.Data;
+public record ProductDTO(
 
-public record ProductDTO (
-
-    Long id,
+    String id,
     String name,
     String category,
     double price,
