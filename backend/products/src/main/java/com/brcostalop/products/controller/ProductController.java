@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/v1/products")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class ProductController {
@@ -19,15 +20,34 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<ProductDTO>> listAll() {
         return ApiResponse.successFactory(productService.allList());
     }
 
     @PostMapping("/save")
     public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDto) {
-        productService.save(productDto);
-        return ApiResponse.successFactory();
+        return ApiResponse.successFactory(productService.save(productDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        return ApiResponse.successFactory(productService.update(id, productDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> search(@PathVariable Long id) {
+        return ApiResponse.successFactory(productService.searchById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDTO>> searchByFilter(@RequestParam Map<String, String> filters) {
+        return ApiResponse.successFactory(productService.searchByFilter(filters));
     }
 
 }

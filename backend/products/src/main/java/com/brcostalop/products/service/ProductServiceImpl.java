@@ -7,9 +7,11 @@ import com.brcostalop.products.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,7 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductMapper productMapper;
 
+    @Transactional
     @Override
     public ProductDTO save(ProductDTO productDto) {
         Product product = productMapper.toEntity(productDto);
@@ -29,27 +32,49 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<ProductDTO> allList() {
-        List<Product> productList = productRepository.findAll();
-        return productMapper.toDtos(productList);
+        return productRepository.findAll().stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public ProductDTO update(Long id, ProductDTO productDTO) {
+        Product product = productRepository.findById(id).orElseThrow();
+        product.setName(productDTO.name());
+        product.setCategory(productDTO.category());
+        product.setPrice(productDTO.price());
+        product.setDescription(productDTO.description());
+        productRepository.save(product);
+        return productMapper.toDto(product);
     }
 
     @Override
-    public ProductDTO update(String id, ProductDTO productDTO) {
-        return null;
+    public void delete(Long id) {
+        productRepository.deleteById(id);
     }
 
     @Override
-    public void delete(String id) {
-
-    }
-
-    @Override
-    public ProductDTO searchById(String id) {
-        return null;
+    public ProductDTO searchById(Long id) {
+        return productRepository.findById(id)
+                .map(productMapper::toDto)
+                .orElseThrow();
     }
 
     @Override
     public List<ProductDTO> searchByFilter(Map<String, String> filter) {
-        return List.of();
+        return productRepository.findAll().stream()
+                .filter(product -> {
+                    boolean match = true;
+                    if (filter.containsKey("name")) {
+                        match &= product.getName().toLowerCase().contains(filter.get("name").toLowerCase());
+                    }
+                    if (filter.containsKey("category")) {
+                        match &= product.getCategory().equalsIgnoreCase(filter.get("category"));
+                    }
+                    return match;
+                })
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

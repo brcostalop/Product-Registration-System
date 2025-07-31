@@ -9,11 +9,11 @@ public interface ProductService {
 
     ProductDTO save(ProductDTO productDto);
 
-    ProductDTO update(String id, ProductDTO productDTO);
+    ProductDTO update(Long id, ProductDTO productDTO);
 
-    void delete(String id);
+    void delete(Long id);
 
-    ProductDTO searchById(String id);
+    ProductDTO searchById(Long id);
 
     List<ProductDTO> allList();
 

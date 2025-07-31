@@ -2,7 +2,7 @@ package com.brcostalop.products.dto;
 
 public record ProductDTO(
 
-    String id,
+    Long id,
     String name,
     String category,
     double price,
