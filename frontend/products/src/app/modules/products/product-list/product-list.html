@@ -1,0 +1,23 @@
+<h2>Lista de Produtos</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Preço</th>
+      <th>Descrição</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      @for (produto of products; track produto.name) {
+        <td>{{produto.name}}</td>
+        <td>{{produto.category}}</td>
+        <td>{{produto.price}}</td>
+        <td>{{produto.description}}</td>
+        <td><button>Editar</button></td>
+        <td><button (click)="delete(produto.id!)">Excluir</button></td>
+      }
+    </tr>
+  </tbody>
+</table>
