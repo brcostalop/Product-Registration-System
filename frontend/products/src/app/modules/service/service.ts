@@ -20,6 +20,10 @@ export class Service {
     return this.http.post<Product>(`${this.BASE_URL()}/save`, product);
   }
 
+  searchById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.BASE_URL()}/${id}`);
+  }
+
   delete(id: number): Observable<Product> {
     return this.http.delete<Product>(`${this.BASE_URL()}/${id}`);
   }

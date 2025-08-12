@@ -2,6 +2,7 @@ import {Component, OnInit, signal} from '@angular/core';
 import {Product} from '../product.model';
 import {HttpClient} from '@angular/common/http';
 import {Service} from '../../service/service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -12,7 +13,8 @@ import {Service} from '../../service/service';
 export class ProductList implements OnInit{
   products: Product[] = [];
 
-  constructor(private http: HttpClient, private service: Service) {}
+  constructor(private http: HttpClient, private service: Service,
+              private router: Router) {}
 
   ngOnInit() {
     this.loadProducts();
@@ -38,6 +40,14 @@ export class ProductList implements OnInit{
         error: (err) => {}
       })
     }
+  }
+
+  new() {
+    this.router.navigate(['/produtos/novo']);
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/produtos/editar', id]);
   }
 
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from '../product.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Service} from '../../service/service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -13,8 +14,10 @@ import {Service} from '../../service/service';
 })
 export class ProductForm implements OnInit{
   form!: FormGroup;
+  id?: number;
 
-  constructor(private fb: FormBuilder, private service: Service) {
+  constructor(private fb: FormBuilder, private productService: Service,
+              private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -25,6 +28,12 @@ export class ProductForm implements OnInit{
       description: ['']
     });
 
+    this.id = this.route.snapshot.params['id'];
+    if (this.id) {
+      this.productService.searchById(this.id).subscribe((product) => {
+        this.form.patchValue(product);
+      })
+    }
   }
 
   save(): void {
@@ -32,12 +41,11 @@ export class ProductForm implements OnInit{
     if (this.form.invalid)
       return;
 
-    this.service.save(this.form.value).subscribe({
-      next: (data) => {
-        // this.form.reset();
-      },
-      error: (err) => {}
-    })
+    const action = this.id
+      ? this.productService.edit(this.id, this.form.value)
+      : this.productService.save(this.form.value);
+
+    action.subscribe(() => this.router.navigate(['/produtos']));
   }
 
 }
