@@ -3,15 +3,19 @@ import {Product} from '../product.model';
 import {HttpClient} from '@angular/common/http';
 import {Service} from '../../service/service';
 import {Router} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-product-list',
-  imports: [],
+  imports: [
+    FormsModule
+  ],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss'
 })
 export class ProductList implements OnInit{
   products: Product[] = [];
+  filters: { [key: string]: string } = {};
 
   constructor(private http: HttpClient, private service: Service,
               private router: Router) {}
@@ -48,6 +52,15 @@ export class ProductList implements OnInit{
 
   edit(id: number) {
     this.router.navigate(['/produtos/editar', id]);
+  }
+
+  search(): void {
+    this.service.searchFilters(this.filters).subscribe({
+      next: (data) => (
+        this.products = data
+      )
+    })
+
   }
 
 }

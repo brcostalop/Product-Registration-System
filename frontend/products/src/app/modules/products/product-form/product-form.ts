@@ -37,7 +37,6 @@ export class ProductForm implements OnInit{
   }
 
   save(): void {
-    debugger
     if (this.form.invalid)
       return;
 

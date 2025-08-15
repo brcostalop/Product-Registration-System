@@ -1,4 +1,9 @@
 <h2>Lista de Produtos</h2>
+<form (ngSubmit)="search()">
+  <input placeholder="Nome" type="text" [(ngModel)]="this.filters['name']" name="name">
+  <input placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
+  <button type="submit">Buscar</button>
+</form>
 <table>
   <thead>
     <tr>
