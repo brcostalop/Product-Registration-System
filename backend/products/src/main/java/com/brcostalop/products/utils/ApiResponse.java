@@ -46,6 +46,10 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> failureFactory(T t) {
-        return new ApiResponse<T>(200, "failure", t);
+        return new ApiResponse<T>(400, "failure", t);
+    }
+
+    public static <T> ApiResponse<T> failureFactory(String msg) {
+        return new ApiResponse<T>(400, msg, null);
     }
 }

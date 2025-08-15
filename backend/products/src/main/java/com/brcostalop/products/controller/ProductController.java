@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> search(@PathVariable Long id) {
+    public ResponseEntity<ProductDTO> searchById(@PathVariable Long id) {
         return ApiResponse.successFactory(productService.searchById(id));
     }
 

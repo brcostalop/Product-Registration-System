@@ -26,6 +26,9 @@ public class ProductServiceImpl implements ProductService{
     @Transactional
     @Override
     public ProductDTO save(ProductDTO productDto) {
+        if (productDto.price() < 0) {
+            throw new IllegalArgumentException("O preço do produto não pode ser negativo");
+        }
         Product product = productMapper.toEntity(productDto);
         return productMapper.toDto(productRepository.save(product));
     }
@@ -39,12 +42,15 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public ProductDTO update(Long id, ProductDTO productDTO) {
+    public ProductDTO update(Long id, ProductDTO productDto) {
+        if (productDto.price() < 0) {
+            throw new IllegalArgumentException("O preço do produto não pode ser negativo");
+        }
         Product product = productRepository.findById(id).orElseThrow();
-        product.setName(productDTO.name());
-        product.setCategory(productDTO.category());
-        product.setPrice(productDTO.price());
-        product.setDescription(productDTO.description());
+        product.setName(productDto.name());
+        product.setCategory(productDto.category());
+        product.setPrice(productDto.price());
+        product.setDescription(productDto.description());
         productRepository.save(product);
         return productMapper.toDto(product);
     }
