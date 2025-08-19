@@ -1,29 +1,43 @@
 <h2>Lista de Produtos</h2>
-<form (ngSubmit)="search()">
-  <input placeholder="Nome" type="text" [(ngModel)]="this.filters['name']" name="name">
-  <input placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
-  <button type="submit">Buscar</button>
+<form (ngSubmit)="search()" class="products-filter-form">
+  <mat-label>Filtros</mat-label>
+  <mat-form-field class="products-filter-full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Nome" type="text" [(ngModel)]="this.filters['name']" name="name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <input matInput placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
+  </mat-form-field>
+  <button matButton="outlined" type="submit">Buscar</button>
 </form>
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Categoria</th>
-      <th>Preço</th>
-      <th>Descrição</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      @for (produto of products; track produto.name) {
-        <td>{{produto.name}}</td>
-        <td>{{produto.category}}</td>
-        <td>{{produto.price}}</td>
-        <td>{{produto.description}}</td>
-        <td><button (click)="edit(produto.id!)">Editar</button></td>
-        <td><button (click)="delete(produto.id!)">Excluir</button></td>
-      }
-    </tr>
-  <button (click)="new()">Novo</button>
-  </tbody>
+<table mat-table [dataSource]="products" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Nome</th>
+    <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Categoria</th>
+    <td mat-cell *matCellDef="let product"> {{product.category}} </td>
+  </ng-container>
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Preço</th>
+    <td mat-cell *matCellDef="let product"> {{product.price}} </td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef>Descrição</th>
+    <td mat-cell *matCellDef="let product"> {{product.description}} </td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Ações</th>
+    <td mat-cell *matCellDef="let product">
+      <button mat-button (click)="edit(product.id!)">Editar</button>
+      <button mat-button (click)="delete(product.id!)">Excluir</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<br>
+<button matButton="outlined" (click)="new()">Novo</button>
