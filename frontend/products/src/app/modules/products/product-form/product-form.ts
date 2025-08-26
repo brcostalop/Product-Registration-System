@@ -3,11 +3,21 @@ import {Product} from '../product.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Service} from '../../service/service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatList, MatListItem} from '@angular/material/list';
+import {MatFormField, MatInput, MatLabel, MatPrefix, MatSuffix} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-form',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatFormField,
+    MatButton,
+    MatPrefix,
+    MatSuffix
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss'
@@ -45,6 +55,10 @@ export class ProductForm implements OnInit{
       : this.productService.save(this.form.value);
 
     action.subscribe(() => this.router.navigate(['/produtos']));
+  }
+
+  return(): void {
+    this.router.navigate(['/produtos']);
   }
 
 }

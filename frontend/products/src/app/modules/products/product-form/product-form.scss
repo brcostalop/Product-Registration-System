@@ -1,0 +1,17 @@
+form {
+  min-width: 150px;
+  max-width: 200px;
+  width: 100%;
+}
+
+.products-filter-full-width {
+  width: 100%;
+}
+
+.price {
+  text-align: right;
+
+  &::-webkit-inner-spin-button{
+    display: none;
+  }
+}

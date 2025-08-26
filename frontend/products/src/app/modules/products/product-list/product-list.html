@@ -1,6 +1,6 @@
 <h2>Lista de Produtos</h2>
 <form (ngSubmit)="search()" class="products-filter-form">
-  <mat-label>Filtros</mat-label>
+  <h3>Filtros</h3>
   <mat-form-field class="products-filter-full-width">
     <mat-label>Nome</mat-label>
     <input matInput placeholder="Nome" type="text" [(ngModel)]="this.filters['name']" name="name">
@@ -10,6 +10,7 @@
     <input matInput placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
   </mat-form-field>
   <button matButton="outlined" type="submit">Buscar</button>
+  <button matButton="outlined" type="reset">Limpar</button>
 </form>
 <table mat-table [dataSource]="products" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
