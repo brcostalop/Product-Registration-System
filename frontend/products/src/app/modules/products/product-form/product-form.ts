@@ -1,23 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from '../product.model';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Service} from '../../service/service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatList, MatListItem} from '@angular/material/list';
-import {MatFormField, MatInput, MatLabel, MatPrefix, MatSuffix} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
+import {
+  MatCardModule,
+} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-product-form',
   imports: [
     ReactiveFormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    MatFormField,
-    MatButton,
-    MatPrefix,
-    MatSuffix
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss'
@@ -34,7 +33,7 @@ export class ProductForm implements OnInit{
     this.form = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
-      price: [0, Validators.required],
+      price: ['', Validators.required],
       description: ['']
     });
 

@@ -1,38 +1,41 @@
-<h2>Novo Produto</h2>
+<mat-card class="product-card">
+  <mat-card-header>
+    <mat-card-title>Novo Produto</mat-card-title>
+  </mat-card-header>
 
-<form [formGroup]="form" (ngSubmit)="save()">
-  <label>Nome:</label>
-  <input type="text" formControlName="name">
-  <br />
-  <label>Categoria:</label>
-  <input type="text" formControlName="category">
-  <br />
-  <label>Preço:</label>
-  <input type="number" formControlName="price">
-  <br />
-  <label>Descrição:</label>
-  <textarea formControlName="description"></textarea>
-  <br />
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="save()" class="form-container">
 
-  <button type="submit">Salvar</button>
-  <mat-form-field class="products-filter-full-width">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="Nome" type="text" formControlName="name" name="name">
-  </mat-form-field>
-  <mat-form-field class="products-filter-full-width">
-    <mat-label>Categoria</mat-label>
-    <input matInput placeholder="Categoria" type="text" formControlName="category" name="category">
-  </mat-form-field>
-  <mat-form-field class="products-filter-full-width" floatLabel="always">
-    <mat-label>Preço</mat-label>
-    <input matInput type="number" class="price" formControlName="price" name="price">
-    <span matTextPrefix>R$</span>
-    <span matTextSuffix>,00</span>
-  </mat-form-field>
-  <mat-form-field class="products-filter-full-width">
-    <mat-label>Descrição</mat-label>
-    <textarea matInput placeholder="Descrição" formControlName="description" name="description"></textarea>
-  </mat-form-field>
-  <button matButton="outlined" >Salvar</button>
-  <button matButton="outlined" (click)="return()" >Voltar</button>
-</form>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Categoria</mat-label>
+        <input matInput type="text" formControlName="category">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Preço</mat-label>
+        @if (form.value.price) {
+          <span matTextPrefix>R$&nbsp;</span>
+        }
+        <input matInput type="number" class="price" formControlName="price" placeholder="0">
+<!--        @if (form.value.price) {-->
+<!--          <span matTextSuffix>,00</span>-->
+<!--        }-->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field form-description">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput rows="4" formControlName="description" name="description"></textarea>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+      <button mat-raised-button color="primary" type="submit" (click)="save()">Salvar</button>
+      <button mat-stroked-button color="warm" type="button" (click)="return()" >Voltar</button>
+  </mat-card-actions>
+</mat-card>
+
