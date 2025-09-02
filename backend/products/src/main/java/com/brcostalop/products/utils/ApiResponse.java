@@ -1,12 +1,11 @@
 package com.brcostalop.products.utils;
 
+import com.brcostalop.products.exception.HandlerException;
 import lombok.Builder;
 import lombok.Getter;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Getter
 @Builder
@@ -15,7 +14,6 @@ public class ApiResponse<T> {
     private int code;
     private String message;
     private T dados;
-//    private String errorData;
 
     public ApiResponse() {
     }
@@ -36,20 +34,12 @@ public class ApiResponse<T> {
     public static <T> ResponseEntity<T> successFactory(T t) {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type", "application/json");
-//        Object obj = t;
         return new ResponseEntity<T>(t, responseHeaders, HttpStatus.OK);
     }
 
-    public static <T> ApiResponse<T> successFactory(String msg, T t) {
-        return new ApiResponse<T>(200, msg, t);
-//        return new ApiResponse<T>(200, msg != null ? null : "" , t);
-    }
-
-    public static <T> ApiResponse<T> failureFactory(T t) {
-        return new ApiResponse<T>(400, "failure", t);
-    }
-
-    public static <T> ApiResponse<T> failureFactory(String msg) {
-        return new ApiResponse<T>(400, msg, null);
+    public static <T> ResponseEntity<Object> failureFactory(HandlerException e) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.add("Content-Type", "application/json");
+        return new ResponseEntity<Object>(e.toDTO(HttpStatus.FORBIDDEN.value()), responseHeaders, HttpStatus.FORBIDDEN);
     }
 }

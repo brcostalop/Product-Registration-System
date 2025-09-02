@@ -1,6 +1,7 @@
 package com.brcostalop.products.controller;
 
 import com.brcostalop.products.dto.ProductDTO;
+import com.brcostalop.products.exception.HandlerException;
 import com.brcostalop.products.service.ProductService;
 import com.brcostalop.products.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,21 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ProductDTO> save(@RequestBody ProductDTO productDto) {
-        return ApiResponse.successFactory(productService.save(productDto));
+    public ResponseEntity<Object> save(@RequestBody ProductDTO productDto) {
+        try {
+            return ApiResponse.successFactory(productService.save(productDto));
+        } catch (HandlerException e) {
+            return ApiResponse.failureFactory(e);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
-        return ApiResponse.successFactory(productService.update(id, productDTO));
+    public ResponseEntity<Object> update(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        try {
+            return ApiResponse.successFactory(productService.update(id, productDTO));
+        } catch (HandlerException e) {
+            return ApiResponse.failureFactory(e);
+        }
     }
 
     @DeleteMapping("/{id}")

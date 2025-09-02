@@ -2,6 +2,7 @@ package com.brcostalop.products.service;
 
 import com.brcostalop.products.dto.ProductDTO;
 import com.brcostalop.products.entity.Product;
+import com.brcostalop.products.exception.InvalidFieldException;
 import com.brcostalop.products.mapper.ProductMapper;
 import com.brcostalop.products.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public ProductDTO save(ProductDTO productDto) {
+    public ProductDTO save(ProductDTO productDto) throws InvalidFieldException {
         if (productDto.price() < 0) {
-            throw new IllegalArgumentException("O preço do produto não pode ser negativo");
+            throw new InvalidFieldException("Campo Inválido",
+                    "O preço do produto não pode ser negativo", "O preço do produto não pode ser negativo");
         }
         Product product = productMapper.toEntity(productDto);
         return productMapper.toDto(productRepository.save(product));
@@ -42,9 +44,10 @@ public class ProductServiceImpl implements ProductService{
 
     @Transactional
     @Override
-    public ProductDTO update(Long id, ProductDTO productDto) {
+    public ProductDTO update(Long id, ProductDTO productDto) throws InvalidFieldException {
         if (productDto.price() < 0) {
-            throw new IllegalArgumentException("O preço do produto não pode ser negativo");
+            throw new InvalidFieldException("Campo Inválido",
+                    "O preço do produto não pode ser negativo", "O preço do produto não pode ser negativo");
         }
         Product product = productRepository.findById(id).orElseThrow();
         product.setName(productDto.name());
