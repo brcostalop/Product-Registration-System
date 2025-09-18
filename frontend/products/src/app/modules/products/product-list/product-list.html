@@ -1,44 +1,61 @@
-<h2>Lista de Produtos</h2>
-<form (ngSubmit)="search()" class="products-filter-form">
-  <h3>Filtros</h3>
-  <mat-form-field class="products-filter-full-width">
-    <mat-label>Nome</mat-label>
-    <input matInput placeholder="Nome" type="text" [(ngModel)]="this.filters['name']" name="name">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Categoria</mat-label>
-    <input matInput placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
-  </mat-form-field>
-  <button matButton="outlined" type="submit">Buscar</button>
-  <button matButton="outlined" type="reset">Limpar</button>
-</form>
-<table mat-table [dataSource]="products" class="mat-elevation-z8">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Nome</th>
-    <td mat-cell *matCellDef="let product"> {{product.name}} </td>
-  </ng-container>
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef>Categoria</th>
-    <td mat-cell *matCellDef="let product"> {{product.category}} </td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Preço</th>
-    <td mat-cell *matCellDef="let product"> {{product.price}} </td>
-  </ng-container>
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef>Descrição</th>
-    <td mat-cell *matCellDef="let product"> {{product.description}} </td>
-  </ng-container>
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Ações</th>
-    <td mat-cell *matCellDef="let product">
-      <button mat-button (click)="edit(product.id!)">Editar</button>
-      <button mat-button (click)="delete(product.id!)">Excluir</button>
-    </td>
-  </ng-container>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Lista de Produtos</mat-card-title>
+  </mat-card-header>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-<br>
-<button matButton="outlined" (click)="new()">Novo</button>
+  <mat-card-content>
+    <form (ngSubmit)="search()" class="form-container">
+      <mat-card-subtitle>Filtrar</mat-card-subtitle>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" [(ngModel)]="this.filters['name']" name="name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Categoria</mat-label>
+        <input matInput placeholder="Categoria" type="text" [(ngModel)]="this.filters['category']" name="category">
+      </mat-form-field>
+
+      <mat-card-actions align="start">
+        <button matButton="outlined" type="submit">Buscar</button>
+        <button matButton="outlined" type="reset">Limpar</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+
+  <table mat-table [dataSource]="products" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Categoria</th>
+      <td mat-cell *matCellDef="let product"> {{product.category}} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Preço</th>
+      <td mat-cell *matCellDef="let product"> {{product.price}} </td>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Descrição</th>
+      <td mat-cell *matCellDef="let product"> {{product.description}} </td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let product">
+        <button mat-button (click)="edit(product.id!)">Editar</button>
+        <button mat-button (click)="delete(product.id!)">Excluir</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator class="layout-list" [length]="totalElements" [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]" (page)="page($event)"></mat-paginator>
+
+  <br>
+  <button class="layout-list" matButton="outlined" (click)="new()">Novo</button>
+</mat-card>

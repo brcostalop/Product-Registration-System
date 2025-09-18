@@ -32,6 +32,10 @@ export class Service {
     return this.http.put<Product>(`${this.BASE_URL()}/${id}`, product);
   }
 
+  getPage(page: number, size: number, sort: string): Observable<Page<Product>> {
+    return this.http.get<Page<Product>>(`${this.BASE_URL()}/page?page=${page}&size=${size}&sortBy=${sort}`);
+  }
+
   searchFilters(filters: { [key: string]: string }): Observable<Product[]> {
     let params = new HttpParams();
     for (const key in filters) {

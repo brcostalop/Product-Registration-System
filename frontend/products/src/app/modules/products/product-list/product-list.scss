@@ -1,3 +1,8 @@
+mat-card {
+  min-width: 150px;
+  max-width: 1000px;
+}
+
 form {
   margin-left: 8px;
   min-width: 150px;
@@ -9,4 +14,15 @@ table {
   min-width: 150px;
   max-width: 1000px;
   width: 100%;
+}
+
+.layout-list {
+  min-width: 150px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+button {
+  margin-left: 5px;
+  max-width: 100px !important;
 }
