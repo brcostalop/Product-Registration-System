@@ -6,6 +6,9 @@ import com.brcostalop.products.service.ProductService;
 import com.brcostalop.products.utils.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +60,18 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<List<ProductDTO>> searchByFilter(@RequestParam Map<String, String> filters) {
         return ApiResponse.successFactory(productService.searchByFilter(filters));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Object> listPage(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "10") int size,
+                                     @RequestParam(defaultValue = "name") String sortBy) {
+        try {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+            return ApiResponse.successFactory(productService.listPaginated(pageable));
+        } catch (HandlerException e) {
+            return ApiResponse.failureFactory(e);
+        }
     }
 
 }
